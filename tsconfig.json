@@ -1,0 +1,51 @@
+{
+  "compilerOptions": {
+    /* ==== File & Module Settings ==== */
+    "rootDir": "./src", // Thư mục chứa code TypeScript
+    "module": "CommonJS", // Hỗ trợ import/export chuẩn ESM trong Node 18+
+    "target": "ES2020", // Output JS version phù hợp Node.js hiện đại
+    "moduleResolution": "Node", // Cách resolve module cho Node ESM
+    "outDir": "./dist", // Thư mục build đầu ra
+
+    /* ==== Type Checking ==== */
+    "strict": true, // Bật toàn bộ kiểm tra nghiêm ngặt
+    "noImplicitAny": true, // Cấm để biến có kiểu 'any' mà không khai báo
+    "strictNullChecks": true, // Kiểm tra null/undefined kỹ lưỡng
+    "noUnusedLocals": true, // Cảnh báo biến không dùng
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+
+    /* ===== Aliases ===== */
+    "baseUrl": "./",
+    "paths": {
+      "@models/*": ["src/models/*"],
+      "@utils/*": ["src/utils/*"],
+      "@controllers/*": ["src/controllers/*"],
+      "@configs/*": ["src/configs/*"],
+      "@routes/*": ["src/routes/*"],
+      "@middlewares/*": ["src/middlewares/*"],
+      "@validations/*": ["src/validations/*"],
+      "@libs/*": ["src/libs/*"],
+      "@services/*": ["src/services/*"],
+      "@providers/*": ["src/providers/*"],
+      "@interfaces/*": ["src/interfaces/*"]
+    },
+
+    /* ==== Node.js Environment ==== */
+    "lib": ["ES2022"],
+    "types": ["node"], // Import type Node.js (@types/node)
+    "esModuleInterop": true, // Cho phép import module CommonJS dễ hơn
+    "skipLibCheck": true, // Bỏ qua check type trong node_modules
+    "allowSyntheticDefaultImports": true,
+
+    /* ==== Source Maps ==== */
+    "sourceMap": true, // Tạo file .map để debug trong VSCode
+
+    /* ==== Build & Compatibility ==== */
+    "resolveJsonModule": true, // Cho phép import file .json
+    "forceConsistentCasingInFileNames": true
+  },
+
+  "include": ["src"], // Compile toàn bộ file trong src/
+  "exclude": ["node_modules", "dist"] // Bỏ qua thư mục build
+}
