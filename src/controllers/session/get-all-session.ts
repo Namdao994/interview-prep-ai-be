@@ -10,13 +10,11 @@ const getAllSessionController = async (
   try {
     const limitQuery = req.query.limit as string
     const offsetQuery = req.query.offset as string
-    const { limit, query, totalSession, sessions } = await getAllSessionService(
-      limitQuery,
-      offsetQuery
-    )
+    const { limit, offset, totalSession, sessions } =
+      await getAllSessionService(limitQuery, offsetQuery)
     res.status(StatusCodes.OK).json({
       limit,
-      query,
+      offset,
       totalSession,
       sessions
     })

@@ -2,9 +2,10 @@ import env from '@configs/env'
 import Session, { ISession } from '@models/Session'
 import { Types } from 'mongoose'
 
-const getAllSessionService = async (
+const getSessionsByUserService = async (
   limitQuery: string,
-  offsetQuery: string
+  offsetQuery: string,
+  userId: string
 ): Promise<{
   limit: number
   offset: number
@@ -17,19 +18,14 @@ const getAllSessionService = async (
   const offset = parseInt(offsetQuery || env.DEFAULT_OFFSET_QUERY)
 
   const totalSession = await Session.countDocuments()
-  const sessions = await Session.find()
+  const sessions = await Session.find({ userId })
     .select('-__v')
     .limit(limit)
     .skip(offset)
     .lean()
     .exec()
 
-  return {
-    limit,
-    offset,
-    totalSession,
-    sessions
-  }
+  return { limit, offset, totalSession, sessions }
 }
 
-export default getAllSessionService
+export default getSessionsByUserService
