@@ -2,6 +2,7 @@ import { Router } from 'express'
 import authRoutes from '@routes/v1/auth'
 import userRoutes from '@routes/v1/user'
 import sessionRoutes from '@routes/v1/session'
+import questionRoutes from '@routes/v1/question'
 const router = Router()
 
 router.get('/', (_, res) => {
@@ -17,5 +18,6 @@ router.get('/', (_, res) => {
 router.use('/auth', authRoutes)
 router.use('/user', userRoutes)
 router.use('/session', sessionRoutes)
+router.use('/question', questionRoutes)
 
 export default router

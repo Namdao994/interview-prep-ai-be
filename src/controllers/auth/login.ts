@@ -31,7 +31,10 @@ const loginController = async (
       sameSite: 'none',
       maxAge: ms(env.REFRESH_TOKEN_LIFETIME)
     })
-    res.status(StatusCodes.OK).json({ user: pickedUser })
+    res.status(StatusCodes.OK).json({
+      message: 'Login successfully',
+      data: pickedUser
+    })
   } catch (error) {
     next(error)
   }

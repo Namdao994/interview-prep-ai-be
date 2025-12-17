@@ -10,7 +10,8 @@ const getUserByIdController = async (
     const { id: userId } = req.jwtVerified
     const pickedUser = await getUserByIdService(userId)
     return res.status(StatusCodes.OK).json({
-      user: pickedUser
+      message: 'Get user successfully',
+      data: pickedUser
     })
   } catch (error) {
     next()

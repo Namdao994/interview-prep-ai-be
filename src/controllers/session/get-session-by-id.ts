@@ -13,7 +13,8 @@ const getSessionByIdController = async (
     const pickedSession = await getSessionByIdService(sessionId, userId)
 
     res.status(StatusCodes.OK).json({
-      session: pickedSession
+      message: 'Get session successfully',
+      data: pickedSession
     })
   } catch (error) {
     next(error)

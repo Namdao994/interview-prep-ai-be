@@ -13,10 +13,13 @@ const getAllSessionController = async (
     const { limit, offset, totalSession, sessions } =
       await getAllSessionService(limitQuery, offsetQuery)
     res.status(StatusCodes.OK).json({
-      limit,
-      offset,
-      totalSession,
-      sessions
+      message: 'Get all sessions successfully',
+      pagination: {
+        limit,
+        offset,
+        total: totalSession
+      },
+      data: sessions
     })
   } catch (error) {
     next(error)

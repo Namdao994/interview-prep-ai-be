@@ -18,7 +18,8 @@ const registerController = async (
     const pickedUser = await registerService(name, email, password)
 
     res.status(StatusCodes.CREATED).json({
-      user: pickedUser
+      message: 'Register successfully',
+      data: pickedUser
     })
   } catch (error) {
     next(error)

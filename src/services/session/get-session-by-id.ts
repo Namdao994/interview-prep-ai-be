@@ -2,16 +2,11 @@ import Session from '@models/Session'
 import ApiError from '@utils/api-error'
 import { PickedSession, pickSession } from '@utils/pickers'
 import { StatusCodes } from 'http-status-codes'
-import { Types } from 'mongoose'
 
 const getSessionByIdService = async (
   sessionId: string,
   userId: string
 ): Promise<PickedSession> => {
-  if (!Types.ObjectId.isValid(sessionId) || !Types.ObjectId.isValid(userId)) {
-    throw new ApiError(StatusCodes.BAD_REQUEST, 'Invalid id')
-  }
-
   const session = await Session.findOne({
     _id: sessionId,
     userId

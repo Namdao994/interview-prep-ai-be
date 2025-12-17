@@ -21,11 +21,13 @@ const createSessionValidation = async (
   next: NextFunction
 ) => {
   const correctCondition = Joi.object({
-    targetRole: Joi.string().required().messages({
+    targetRole: Joi.string().trim().strict().required().messages({
       'any.required': 'Role is required'
     }),
     experience: Joi.string()
       .required()
+      .trim()
+      .strict()
       .messages({
         'any.required': 'Experience is required',
         'any.invalid': 'Experience must be a number (string)',
@@ -35,8 +37,10 @@ const createSessionValidation = async (
     topicsToFocus: Joi.string().required().messages({
       'any.required': 'Topics to focus is required'
     }),
-    description: Joi.string(),
+    description: Joi.string().trim().strict(),
     numberOfQuestions: Joi.string()
+      .trim()
+      .strict()
       .messages({
         'any.invalid': 'Number of questions must be a number (string)',
         'number.min': 'Number of questions must be greater than or equal to 0'
@@ -48,6 +52,10 @@ const createSessionValidation = async (
         numericStringMinZeroValidator(value, helpers)
       })
   })
+    .required()
+    .messages({
+      'any.required': 'Invalid value'
+    })
   try {
     await correctCondition.validateAsync(req.body, {
       abortEarly: true,

@@ -14,7 +14,8 @@ const createSessionController = async (
     const { id: userId } = req.jwtVerified
     const pickedSession = await createSessionService(sessionBody, userId)
     res.status(StatusCodes.CREATED).json({
-      session: pickedSession
+      message: 'Session created successfully',
+      data: pickedSession
     })
   } catch (error) {
     next(error)

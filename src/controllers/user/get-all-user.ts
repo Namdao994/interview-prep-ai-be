@@ -13,7 +13,15 @@ const getAllUserController = async (
       limitQuery,
       offsetQuery
     )
-    res.status(StatusCodes.OK).json({ limit, offset, totalUsers, users })
+    res.status(StatusCodes.OK).json({
+      message: 'Get all user successfully',
+      pagination: {
+        limit,
+        offset,
+        total: totalUsers
+      },
+      data: users
+    })
   } catch (error) {
     next(error)
   }
