@@ -18,6 +18,10 @@ const getAllSessionService = async (
 
   const totalSession = await Session.countDocuments()
   const sessions = await Session.find()
+    .populate({
+      path: 'questions',
+      options: { sort: { createdAt: -1 } }
+    })
     .select('-__v')
     .limit(limit)
     .skip(offset)

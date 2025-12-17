@@ -19,7 +19,11 @@ const env = {
   GITHUB_CLIENT_SECRET: process.env.GITHUB_CLIENT_SECRET as string,
   DISCORD_CLIENT_ID: process.env.DISCORD_CLIENT_ID as string,
   DISCORD_CLIENT_SECRET: process.env.DISCORD_CLIENT_SECRET as string,
-  FRONTEND_URL: process.env.FRONTEND_URL as string
+  FRONTEND_URL: process.env.FRONTEND_URL as string,
+  POE_API_KEY: process.env.POE_API_KEY as string,
+  BASE_URL_POE_AI_API: process.env.BASE_URL_POE_AI_API as string,
+  DEFAULT_NUMBER_QUESTIONS_GENERATION: process.env
+    .DEFAULT_NUMBER_QUESTIONS_GENERATION as string
 }
 
 export default env

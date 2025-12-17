@@ -15,7 +15,7 @@ const getSessionsByUserController = async (
     const { limit, offset, sessions, totalSession } =
       await getSessionsByUserService(limitQuery, offsetQuery, userId)
 
-    res.status(StatusCodes.OK).json({ limit, offset, sessions, totalSession })
+    res.status(StatusCodes.OK).json({ limit, offset, totalSession, sessions })
   } catch (error) {
     next(error)
   }
