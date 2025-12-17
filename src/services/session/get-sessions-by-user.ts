@@ -21,6 +21,7 @@ const getSessionsByUserService = async (
   const sessions = await Session.find({ userId })
     .populate({
       path: 'questions',
+      select: '-sessionId -__v',
       options: { sort: { createdAt: -1 } }
     })
     .select('-__v')
