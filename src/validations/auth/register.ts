@@ -23,9 +23,10 @@ const registerValidation = async (
       .strict()
       .required()
       .min(3)
-      .message('Password must be at least 3 characters')
+      .message('Username must be at least 3 characters')
       .max(32)
-      .message('Password must be at most 32 characters')
+      .message('Username must be at most 32 characters'),
+    profileImageFile: Joi.any().optional()
   })
     .required()
     .messages({

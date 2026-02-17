@@ -8,13 +8,45 @@ import registerValidation from '@validations/auth/register'
 import passport from '@configs/configed-passport'
 import { Router } from 'express'
 import oauth20LoginController from '@controllers/auth/oauth-20-login'
+import csrfMiddleware from '@middlewares/csrf'
+import uploadImageMiddleware from '@middlewares/upload-image'
+import changePasswordController from '@controllers/auth/change-password'
+import changePasswordValidation from '@validations/auth/change-password'
+import rotateCsrfTokenController from '@controllers/auth/rotate-csrf-token'
+import verifyEmailOtpValidation from '@validations/auth/verify-email-otp'
+import verifyEmailOtpController from '@controllers/auth/verify-email-otp'
 
 const router = Router()
 
-router.post('/register', registerValidation, registerController)
+router.post(
+  '/register',
+  uploadImageMiddleware.single('profileImageFile'),
+  registerValidation,
+  registerController
+)
 router.post('/login', loginValidation, loginController)
-router.delete('/logout', authenticateMiddleware, logoutController)
-router.get('/refresh-token', refreshTokenController)
+router.delete(
+  '/logout',
+  authenticateMiddleware,
+  csrfMiddleware,
+  logoutController
+)
+router.post('/refresh-token', refreshTokenController)
+router.post('/rotate-csrf', rotateCsrfTokenController)
+
+router.post(
+  '/verify-email-otp',
+  verifyEmailOtpValidation,
+  verifyEmailOtpController
+)
+
+router.patch(
+  '/change-password',
+  authenticateMiddleware,
+  csrfMiddleware,
+  changePasswordValidation,
+  changePasswordController
+)
 
 router.get('/login/google', passport.authenticate('google'))
 

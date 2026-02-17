@@ -1,10 +1,11 @@
 import env from '@configs/env'
-import Question, { IQuestion } from '@models/Question'
+import Question from '@models/Question'
 import ApiError from '@utils/api-error'
-import { PickedQuestion, pickQuestion } from '@utils/pickers'
+import { pickQuestion } from '@utils/pickers'
 import { questionAnswerPrompt } from '@utils/prompt-ai'
 import { StatusCodes } from 'http-status-codes'
 import OpenAI from 'openai'
+import type { IQuestion, PickedQuestion } from '@interfaces/question'
 const client = new OpenAI({
   apiKey: env.POE_API_KEY,
   baseURL: env.BASE_URL_POE_AI_API

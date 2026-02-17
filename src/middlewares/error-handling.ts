@@ -19,8 +19,8 @@ const errorHandlingMiddleware = (
   const status = error.statusCode || StatusCodes.INTERNAL_SERVER_ERROR
 
   res.status(status).json({
-    success: false,
     message: error.message,
+    errorCode: error.errorCode,
     // Xóa stack nếu không phải dev
     ...(env.NODE_ENV === 'dev' && { stack: error.stack })
   })

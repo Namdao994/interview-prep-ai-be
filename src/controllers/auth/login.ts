@@ -1,9 +1,10 @@
 import env from '@configs/env'
-import { IUser } from '@models/User'
 import loginService from '@services/auth/login'
 import type { NextFunction, Request, Response } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import ms from 'ms'
+import crypto from 'crypto'
+import type { IUser } from '@interfaces/user'
 type UserData = {
   email: IUser['email']['value']
   password: NonNullable<IUser['password']>
@@ -19,18 +20,26 @@ const loginController = async (
       email,
       password
     )
+    const csrfToken = crypto.randomBytes(32).toString('hex')
     res.cookie('accessToken', accessToken, {
       httpOnly: true,
-      secure: env.NODE_ENV === 'production',
-      sameSite: 'none',
-      maxAge: ms(env.ACCESS_TOKEN_LIFETIME)
+      secure: true,
+      sameSite: 'lax',
+      maxAge: ms(env.ACCESS_TOKEN_COOKIE)
     })
     res.cookie('refreshToken', refreshToken, {
       httpOnly: true,
-      secure: env.NODE_ENV === 'production',
-      sameSite: 'none',
-      maxAge: ms(env.REFRESH_TOKEN_LIFETIME)
+      secure: true,
+      sameSite: 'lax',
+      maxAge: ms(env.REFRESH_TOKEN_COOKIE)
     })
+    res.cookie('csrfToken', csrfToken, {
+      httpOnly: false,
+      secure: env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: ms(env.CSRF_TOKEN_COOKIE)
+    })
+
     res.status(StatusCodes.OK).json({
       message: 'Login successfully',
       data: pickedUser

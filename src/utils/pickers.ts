@@ -1,13 +1,8 @@
-import { Types } from 'mongoose'
-import { IUser } from '@models/User'
 import lodash from 'lodash'
-import { ISession } from '@models/Session'
-import { IQuestion } from '@models/Question'
-
-export type ModelDocument<T> = T & {
-  _id: Types.ObjectId
-  __v: number
-}
+import { ModelDocument } from '@interfaces/common'
+import { IQuestion, PickedQuestion } from '@interfaces/question'
+import { PickedSession, SessionResponseDto } from '@interfaces/session'
+import type { IUser } from '@interfaces/user'
 
 export type PickedUser = {
   name: IUser['profile']['name']
@@ -23,18 +18,24 @@ export const pickUser = (user: ModelDocument<IUser>): PickedUser => {
   }
 }
 
-export type PickedSession = Omit<ModelDocument<ISession>, '__v'>
-
 export const pickSession = (
-  session: ModelDocument<ISession>
+  session: ModelDocument<SessionResponseDto>
 ): PickedSession => {
-  return lodash.omit(session, ['__v'])
-}
+  const { _id, userId, ...rest } = session
 
-export type PickedQuestion = Omit<ModelDocument<IQuestion>, '__v'>
+  return {
+    ...rest,
+    id: _id.toString()
+  }
+}
 
 export const pickQuestion = (
   question: ModelDocument<IQuestion>
 ): PickedQuestion => {
-  return lodash.omit(question, ['__v'])
+  const { _id, ...rest } = question
+
+  return {
+    ...rest,
+    id: _id.toString()
+  }
 }

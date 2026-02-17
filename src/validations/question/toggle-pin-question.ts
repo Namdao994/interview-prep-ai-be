@@ -23,8 +23,13 @@ const togglePinQuestionValidation = async (
       abortEarly: true,
       allowUnknown: false
     })
-    const questionId = req.params.id
-    if (!Types.ObjectId.isValid(questionId)) {
+    const { sessionId, questionId } = req.params
+    const { id: userId } = req.jwtVerified
+    if (
+      !Types.ObjectId.isValid(sessionId) ||
+      !Types.ObjectId.isValid(questionId) ||
+      !Types.ObjectId.isValid(userId)
+    ) {
       throw new ApiError(StatusCodes.BAD_REQUEST, 'Invalid id')
     }
     next()

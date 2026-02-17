@@ -1,5 +1,5 @@
 import type { NextFunction, Request, Response } from 'express'
-import type { IUser } from '@models/User'
+import type { IUser } from '@interfaces/user'
 import registerService from '@services/auth/register'
 import { StatusCodes } from 'http-status-codes'
 
@@ -15,7 +15,13 @@ const registerController = async (
 ): Promise<void> => {
   try {
     const { email, name, password } = req.body as UserData
-    const pickedUser = await registerService(name, email, password)
+    const profileImageFile = req.file
+    const pickedUser = await registerService(
+      name,
+      email,
+      password,
+      profileImageFile
+    )
 
     res.status(StatusCodes.CREATED).json({
       message: 'Register successfully',

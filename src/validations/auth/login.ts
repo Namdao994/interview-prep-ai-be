@@ -11,17 +11,17 @@ const loginValidation = async (
       .strict()
       .required()
       .pattern(/^\S+@\S+\.\S+$/)
-      .message('Email is invalid'),
+      .message('Invalid email or password'),
     password: Joi.string()
       .trim()
       .strict()
       .required()
       .min(8)
-      .message('Password must be at least 8 characters')
+      .message('Invalid email or password')
   })
     .required()
     .messages({
-      'any.required': 'Invalid value'
+      'any.required': 'Invalid email or password'
     })
 
   try {

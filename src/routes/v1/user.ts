@@ -1,18 +1,38 @@
+import changeAvatarController from '@controllers/user/change-avatar'
+import deleteAvatarController from '@controllers/user/delete-avatar'
+import deleteMyAccountController from '@controllers/user/delete-my-account'
+import deleteUserByIdController from '@controllers/user/delete-user-by-id'
 import getAllUserController from '@controllers/user/get-all-user'
 import getUserByIdController from '@controllers/user/get-user-by-id'
-import authenticateMiddleware from '@middlewares/authenticate'
-import authorizeMiddleware from '@middlewares/authorize'
+import updateUserController from '@controllers/user/update-user'
+import uploadImageMiddleware from '@middlewares/upload-image'
+import deleteMyAccountValidation from '@validations/user/delete-my-account'
+// import authorizeMiddleware from '@middlewares/authorize'
+import deleteUserByIdValidation from '@validations/user/delete-user-by-id'
+import updateUserValidation from '@validations/user/update-user'
 import { Router } from 'express'
 
 const router = Router()
 
 router.get(
   '/',
-  authenticateMiddleware,
-  authorizeMiddleware(['get_all_user']),
+  // authorizeMiddleware(['get_all_user']),
   getAllUserController
 )
 
-router.get('/my-profile', authenticateMiddleware, getUserByIdController)
+router.get('/my-profile', getUserByIdController)
+router.delete('/:id/delete', deleteUserByIdValidation, deleteUserByIdController)
+
+router.delete('/delete', deleteMyAccountValidation, deleteMyAccountController)
+
+router.patch('/update', updateUserValidation, updateUserController)
+
+router.patch(
+  '/change-avatar',
+  uploadImageMiddleware.single('profileImageFile'),
+  changeAvatarController
+)
+
+router.delete('/delete-avatar', deleteAvatarController)
 
 export default router

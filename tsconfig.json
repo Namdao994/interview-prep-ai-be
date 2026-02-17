@@ -18,6 +18,7 @@
     /* ===== Aliases ===== */
     "baseUrl": "./",
     "paths": {
+      "@interfaces/*": ["src/interfaces/*"],
       "@models/*": ["src/models/*"],
       "@utils/*": ["src/utils/*"],
       "@controllers/*": ["src/controllers/*"],
@@ -28,7 +29,7 @@
       "@libs/*": ["src/libs/*"],
       "@services/*": ["src/services/*"],
       "@providers/*": ["src/providers/*"],
-      "@interfaces/*": ["src/interfaces/*"]
+      "@constants/*": ["src/constants/*"]
     },
 
     /* ==== Node.js Environment ==== */

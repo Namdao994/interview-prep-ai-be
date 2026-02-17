@@ -1,3 +1,4 @@
+import 'module-alias/register'
 import rateLimiter from '@middlewares/rate-limiter'
 import compression from 'compression'
 import express from 'express'
@@ -10,6 +11,7 @@ import AsyncExitHook from 'async-exit-hook'
 import { closeDb, connectDb } from '@configs/mongodb'
 import errorHandlingMiddleware from '@middlewares/error-handling'
 import passport from 'passport'
+import compressionOptions from '@configs/compression'
 const startServer = () => {
   const app = express()
 
@@ -25,11 +27,7 @@ const startServer = () => {
   app.use(express.urlencoded({ extended: true }))
 
   app.use(cookieParser())
-  app.use(
-    compression({
-      threshold: 1024
-    })
-  )
+  app.use(compression(compressionOptions))
 
   app.use(helmet())
 

@@ -6,8 +6,9 @@ const logoutController = async (
   next: NextFunction
 ) => {
   try {
-    res.clearCookie('accessToken')
     res.clearCookie('refreshToken')
+    res.clearCookie('accessToken')
+    res.clearCookie('csrfToken')
 
     res.status(StatusCodes.OK).json({ message: 'Logout successfully' })
   } catch (error) {

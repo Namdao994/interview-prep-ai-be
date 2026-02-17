@@ -8,16 +8,16 @@ const getAllUserController = async (
 ) => {
   try {
     const limitQuery = req.query.limit as string
-    const offsetQuery = req.query.offset as string
-    const { limit, offset, totalUsers, users } = await getAllUserService(
+    const pageQuery = req.query.page as string
+    const { limit, page, totalUsers, users } = await getAllUserService(
       limitQuery,
-      offsetQuery
+      pageQuery
     )
     res.status(StatusCodes.OK).json({
       message: 'Get all user successfully',
       pagination: {
         limit,
-        offset,
+        page,
         total: totalUsers
       },
       data: users

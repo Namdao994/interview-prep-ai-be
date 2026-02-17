@@ -2,12 +2,12 @@ import env from '@configs/env'
 import ApiError from '@utils/api-error'
 import { StatusCodes } from 'http-status-codes'
 import jwt from 'jsonwebtoken'
-const refreshTokenService = (
+const refreshTokenService = async (
   refreshToken: string
-): {
+): Promise<{
   newAccessToken: string
   newRefreshToken: string
-} => {
+}> => {
   if (!refreshToken) {
     throw new ApiError(StatusCodes.GONE, 'Logout successfully')
   }

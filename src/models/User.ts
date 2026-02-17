@@ -2,25 +2,8 @@
  * Node modules
  */
 import { model, Schema, Types } from 'mongoose'
+import type { IUser } from '@interfaces/user'
 
-export interface IUser {
-  externalIds: {
-    google?: string
-    discord?: string
-    github?: string
-  }
-  providers: string[]
-  email: {
-    value: string
-    verified: boolean
-  }
-  profile: {
-    name: string
-    profileImageUrl: string
-  }
-  password: string
-  roleId: Types.ObjectId
-}
 /**
  * User Schema
  */
@@ -54,7 +37,8 @@ const userSchema = new Schema<IUser>(
         match: [/^\S+@\S+\.\S+$/, 'Email is invalid']
       },
       verified: {
-        type: Boolean
+        type: Boolean,
+        default: false
       }
     },
     profile: {
@@ -64,6 +48,10 @@ const userSchema = new Schema<IUser>(
         maxLength: [32, 'Username must be less than 32 characters']
       },
       profileImageUrl: {
+        type: String,
+        default: null
+      },
+      profileImagePublicId: {
         type: String,
         default: null
       }
@@ -78,6 +66,14 @@ const userSchema = new Schema<IUser>(
       trim: true,
       select: false,
       default: null
+    },
+    emailOtpHash: {
+      type: String,
+      default: null
+    },
+    emailOtpExpiredAt: {
+      type: Date,
+      default: new Date(Date.now() + 5 * 60 * 1000)
     }
   },
   {

@@ -9,20 +9,27 @@ const getSessionsByUserController = async (
 ) => {
   try {
     const { id: userId } = req.jwtVerified
+    const keywordQuery = req.query.keyword as string
     const limitQuery = req.query.limit as string
-    const offsetQuery = req.query.offset as string
-
-    const { limit, offset, sessions, totalSession } =
-      await getSessionsByUserService(limitQuery, offsetQuery, userId)
+    const pageQuery = req.query.page as string
+    const statusQuery = req.query.status as string
+    const { limit, page, pickedSessions, totalSession } =
+      await getSessionsByUserService(
+        limitQuery,
+        pageQuery,
+        keywordQuery,
+        statusQuery,
+        userId
+      )
 
     res.status(StatusCodes.OK).json({
       message: 'Get all sessions successfully',
       pagination: {
         limit,
-        offset,
+        page,
         total: totalSession
       },
-      data: sessions
+      data: pickedSessions
     })
   } catch (error) {
     next(error)

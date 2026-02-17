@@ -1,21 +1,27 @@
-import Question, { IQuestion } from '@models/Question'
+import Question from '@models/Question'
 import ApiError from '@utils/api-error'
-import { PickedQuestion, pickQuestion } from '@utils/pickers'
+import { pickQuestion } from '@utils/pickers'
 import { StatusCodes } from 'http-status-codes'
+import type { IQuestion, PickedQuestion } from '@interfaces/question'
 
 export type QuestionBody = Pick<IQuestion, 'isPinned'>
 const togglePinQuestionService = async (
+  sessionId: string,
   questionId: string,
   isPinned: boolean
 ): Promise<PickedQuestion> => {
-  const updatedQuestion = await Question.findByIdAndUpdate(
-    questionId,
+  const updatedQuestion = await Question.findOneAndUpdate(
     {
-      $set: {
-        isPinned
-      }
+      _id: questionId,
+      sessionId: sessionId
     },
-    { new: true, runValidators: true }
+    {
+      $set: { isPinned }
+    },
+    {
+      new: true,
+      runValidators: true
+    }
   ).exec()
 
   if (!updatedQuestion) {

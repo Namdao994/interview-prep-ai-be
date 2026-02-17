@@ -1,7 +1,7 @@
 import env from '@configs/env'
 import { PickedUser } from '@utils/pickers'
 import type { Request, Response, NextFunction } from 'express'
-import { StatusCodes } from 'http-status-codes'
+import crypto from 'crypto'
 import ms from 'ms'
 
 type PickedProfile = {
@@ -17,26 +17,31 @@ const oauth20LoginController = (
 ) => {
   try {
     if (req.query.error === 'access_denied') {
-      return res.redirect(`${env.FRONTEND_URL}/login?error=oauth_cancelled`)
+      return res.redirect(`${env.WEBSITE_DOMAIN}/login?error=oauth_cancelled`)
     }
-    const { accessToken, refreshToken, pickedUser } = req.user as PickedProfile
-
+    const { refreshToken, accessToken } = req.user as PickedProfile
+    const csrfToken = crypto.randomBytes(32).toString('hex')
     res.cookie('accessToken', accessToken, {
       httpOnly: true,
       secure: true,
-      sameSite: 'none',
-      maxAge: ms(env.ACCESS_TOKEN_LIFETIME)
+      sameSite: 'lax',
+      maxAge: ms(env.ACCESS_TOKEN_COOKIE)
     })
+
     res.cookie('refreshToken', refreshToken, {
       httpOnly: true,
       secure: true,
-      sameSite: 'none',
-      maxAge: ms(env.REFRESH_TOKEN_LIFETIME)
+      sameSite: 'lax',
+      maxAge: ms(env.REFRESH_TOKEN_COOKIE)
+    })
+    res.cookie('csrfToken', csrfToken, {
+      httpOnly: false,
+      secure: env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: ms(env.CSRF_TOKEN_COOKIE)
     })
 
-    res.status(StatusCodes.OK).json({
-      user: pickedUser
-    })
+    res.redirect(`${env.WEBSITE_DOMAIN}/auth/login`)
   } catch (error) {
     next(error)
   }
