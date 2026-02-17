@@ -12,6 +12,7 @@ import { closeDb, connectDb } from '@configs/mongodb'
 import errorHandlingMiddleware from '@middlewares/error-handling'
 import passport from 'passport'
 import compressionOptions from '@configs/compression'
+import env from '@configs/env'
 const startServer = () => {
   const app = express()
 
@@ -42,6 +43,17 @@ const startServer = () => {
   app.listen(3000, () => {
     console.log('Listening on 3000')
   })
+
+  if (env.NODE_ENV === 'production') {
+    app.listen(process.env.PORT, () => {
+      console.log('Production Back-end Server is running successfully')
+    })
+  } else {
+    // Môi trường Local Dev
+    app.listen(env.APP_PORT, env.WEBSITE_DOMAIN, () => {
+      console.log('3. Local DEV Back-end Server is running successfully')
+    })
+  }
 
   AsyncExitHook(async (callback) => {
     console.log('4. disconnecting db...')

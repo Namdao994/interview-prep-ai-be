@@ -4,6 +4,7 @@ import { StringValue } from 'ms'
 dotenv.config()
 
 const env = {
+  APP_PORT: 3000,
   NODE_ENV: process.env.NODE_ENV!,
   APP_NAME: process.env.APP_NAME!,
   //
