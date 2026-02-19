@@ -12,7 +12,7 @@ passport.use(
     {
       clientID: env.GOOGLE_CLIENT_ID,
       clientSecret: env.GOOGLE_CLIENT_SECRET,
-      callbackURL: '/api/v1/auth/oauth2/redirect/google',
+      callbackURL: env.GOOGLE_REDIRECT_URI,
       scope: ['profile', 'email']
     },
     async function verify(_accessToken, _refreshToken, profile, cb) {
@@ -38,7 +38,7 @@ passport.use(
     {
       clientID: env.GITHUB_CLIENT_ID,
       clientSecret: env.GITHUB_CLIENT_SECRET,
-      callbackURL: '/api/v1/auth/oauth2/redirect/github',
+      callbackURL: env.GITHUB_REDIRECT_URI,
       scope: ['user:email']
     },
     async (
@@ -67,7 +67,7 @@ passport.use(
     {
       clientID: env.DISCORD_CLIENT_ID,
       clientSecret: env.DISCORD_CLIENT_SECRET,
-      callbackURL: '/api/v1/auth/oauth2/redirect/discord',
+      callbackURL: env.DISCORD_REDIRECT_URI,
       scope: ['identify', 'email']
     },
     async (_accessToken, _refreshToken, profile, cb) => {
