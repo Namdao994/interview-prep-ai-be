@@ -3,7 +3,6 @@ import deleteAvatarController from '@controllers/user/delete-avatar'
 import deleteMyAccountController from '@controllers/user/delete-my-account'
 import deleteUserByIdController from '@controllers/user/delete-user-by-id'
 import getAllUserController from '@controllers/user/get-all-user'
-import getUserByIdController from '@controllers/user/get-user-by-id'
 import updateUserController from '@controllers/user/update-user'
 import uploadImageMiddleware from '@middlewares/upload-image'
 import deleteMyAccountValidation from '@validations/user/delete-my-account'
@@ -20,7 +19,6 @@ router.get(
   getAllUserController
 )
 
-router.get('/my-profile', getUserByIdController)
 router.delete('/:id/delete', deleteUserByIdValidation, deleteUserByIdController)
 
 router.delete('/delete', deleteMyAccountValidation, deleteMyAccountController)
