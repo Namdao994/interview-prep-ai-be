@@ -15,9 +15,10 @@ const authenticateMiddleware = (
   _res: Response,
   next: NextFunction
 ): void => {
-  const accessToken = req.cookies.accessToken as string
+  // lấy Authorization header
+  const authHeader = req.headers.authorization
 
-  if (!accessToken) {
+  if (!authHeader) {
     return next(
       new ApiError(
         StatusCodes.UNAUTHORIZED,
@@ -27,6 +28,21 @@ const authenticateMiddleware = (
     )
   }
 
+  // format: Bearer token
+  const parts = authHeader.split(' ')
+
+  if (parts.length !== 2 || parts[0] !== 'Bearer') {
+    return next(
+      new ApiError(
+        StatusCodes.UNAUTHORIZED,
+        'Invalid authorization format',
+        ErrorCode.INVALID_TOKEN
+      )
+    )
+  }
+
+  const accessToken = parts[1]
+
   try {
     const jwtVerified = jwt.verify(
       accessToken,
@@ -34,6 +50,7 @@ const authenticateMiddleware = (
     ) as JwtPayload & { id: string; roleId: string }
 
     req.jwtVerified = jwtVerified
+
     next()
   } catch (error) {
     if (error instanceof TokenExpiredError) {
