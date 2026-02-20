@@ -22,14 +22,14 @@ const oauth20LoginController = (
     const { refreshToken, accessToken } = req.user as PickedProfile
     const csrfToken = crypto.randomBytes(32).toString('hex')
     res.cookie('accessToken', accessToken, {
-      httpOnly: false,
+      httpOnly: true,
       secure: true,
       sameSite: 'none',
       maxAge: ms(env.ACCESS_TOKEN_COOKIE)
     })
 
     res.cookie('refreshToken', refreshToken, {
-      httpOnly: false,
+      httpOnly: true,
       secure: true,
       sameSite: 'none',
       maxAge: ms(env.REFRESH_TOKEN_COOKIE)
