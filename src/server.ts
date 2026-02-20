@@ -15,7 +15,7 @@ import compressionOptions from '@configs/compression'
 import env from '@configs/env'
 const startServer = () => {
   const app = express()
-
+  app.set('trust proxy', 1)
   app.use((_req, res, next) => {
     res.set('Cache-Control', 'no-store')
     next()
