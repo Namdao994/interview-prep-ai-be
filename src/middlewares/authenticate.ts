@@ -15,9 +15,9 @@ const authenticateMiddleware = (
   _res: Response,
   next: NextFunction
 ): void => {
-  const accessToken = req.cookies.accessToken as string
-  console.log('accessToken', accessToken)
-  if (!accessToken) {
+  const authHeader = req.headers.authorization
+  console.log('authHeader', authHeader)
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
     return next(
       new ApiError(
         StatusCodes.UNAUTHORIZED,
@@ -26,6 +26,8 @@ const authenticateMiddleware = (
       )
     )
   }
+
+  const accessToken = authHeader.replace('Bearer ', '').trim()
 
   try {
     const jwtVerified = jwt.verify(
