@@ -15,7 +15,6 @@ import changePasswordValidation from '@validations/auth/change-password'
 import rotateCsrfTokenController from '@controllers/auth/rotate-csrf-token'
 import verifyEmailOtpValidation from '@validations/auth/verify-email-otp'
 import verifyEmailOtpController from '@controllers/auth/verify-email-otp'
-import getUserByIdController from '@controllers/user/get-user-by-id'
 
 const router = Router()
 
@@ -72,6 +71,5 @@ router.get(
   passport.authenticate('discord', { session: false }),
   oauth20LoginController
 )
-router.get('/my-profile', getUserByIdController)
 
 export default router

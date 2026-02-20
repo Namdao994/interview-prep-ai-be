@@ -24,20 +24,20 @@ const oauth20LoginController = (
     res.cookie('accessToken', accessToken, {
       httpOnly: true,
       secure: true,
-      sameSite: 'lax',
+      sameSite: 'none',
       maxAge: ms(env.ACCESS_TOKEN_COOKIE)
     })
 
     res.cookie('refreshToken', refreshToken, {
       httpOnly: true,
       secure: true,
-      sameSite: 'lax',
+      sameSite: 'none',
       maxAge: ms(env.REFRESH_TOKEN_COOKIE)
     })
     res.cookie('csrfToken', csrfToken, {
       httpOnly: false,
       secure: env.NODE_ENV === 'production',
-      sameSite: 'lax',
+      sameSite: 'none',
       maxAge: ms(env.CSRF_TOKEN_COOKIE)
     })
 
