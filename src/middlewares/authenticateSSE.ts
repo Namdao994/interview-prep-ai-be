@@ -10,14 +10,14 @@ import jwt, {
   JwtPayload
 } from 'jsonwebtoken'
 
-const authenticateMiddleware = (
+const authenticateSSE = (
   req: Request,
   _res: Response,
   next: NextFunction
 ): void => {
-  const authHeader = req.headers.authorization
-  console.log('authHeader', authHeader)
-  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+  const accessToken = req.query.accessToken as string
+  console.log('accessToken', accessToken)
+  if (!accessToken) {
     return next(
       new ApiError(
         StatusCodes.UNAUTHORIZED,
@@ -26,8 +26,6 @@ const authenticateMiddleware = (
       )
     )
   }
-
-  const accessToken = authHeader.replace('Bearer ', '').trim()
 
   try {
     const jwtVerified = jwt.verify(
@@ -62,4 +60,4 @@ const authenticateMiddleware = (
   }
 }
 
-export default authenticateMiddleware
+export default authenticateSSE

@@ -6,7 +6,6 @@ import questionRoutes from '@routes/v1/question'
 import aiRoutes from '@routes/v1/ai'
 import authenticateMiddleware from '@middlewares/authenticate'
 import { StatusCodes } from 'http-status-codes'
-import csrfMiddleware from '@middlewares/csrf'
 const router = Router()
 
 router.get('/', (_, res) => {
@@ -20,9 +19,9 @@ router.get('/', (_, res) => {
 })
 
 router.use('/auth', authRoutes)
-router.use('/user', authenticateMiddleware, csrfMiddleware, userRoutes)
-router.use('/session', authenticateMiddleware, csrfMiddleware, sessionRoutes)
-router.use('/question', authenticateMiddleware, csrfMiddleware, questionRoutes)
-router.use('/ai', authenticateMiddleware, csrfMiddleware, aiRoutes)
+router.use('/user', authenticateMiddleware, userRoutes)
+router.use('/session', authenticateMiddleware, sessionRoutes)
+router.use('/question', authenticateMiddleware, questionRoutes)
+router.use('/ai', aiRoutes)
 
 export default router

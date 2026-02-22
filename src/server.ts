@@ -1,4 +1,7 @@
-import 'module-alias/register'
+import env from '@configs/env'
+if (env.NODE_ENV === 'production') {
+  require('module-alias/register')
+}
 import rateLimiter from '@middlewares/rate-limiter'
 import compression from 'compression'
 import express from 'express'
@@ -12,10 +15,8 @@ import { closeDb, connectDb } from '@configs/mongodb'
 import errorHandlingMiddleware from '@middlewares/error-handling'
 import passport from 'passport'
 import compressionOptions from '@configs/compression'
-import env from '@configs/env'
 const startServer = () => {
   const app = express()
-  app.set('trust proxy', 1)
   app.use((_req, res, next) => {
     res.set('Cache-Control', 'no-store')
     next()

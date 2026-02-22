@@ -8,7 +8,6 @@ import registerValidation from '@validations/auth/register'
 import passport from '@configs/configed-passport'
 import { Router } from 'express'
 import oauth20LoginController from '@controllers/auth/oauth-20-login'
-import csrfMiddleware from '@middlewares/csrf'
 import uploadImageMiddleware from '@middlewares/upload-image'
 import changePasswordController from '@controllers/auth/change-password'
 import changePasswordValidation from '@validations/auth/change-password'
@@ -25,12 +24,7 @@ router.post(
   registerController
 )
 router.post('/login', loginValidation, loginController)
-router.delete(
-  '/logout',
-  authenticateMiddleware,
-  csrfMiddleware,
-  logoutController
-)
+router.delete('/logout', authenticateMiddleware, logoutController)
 router.post('/refresh-token', refreshTokenController)
 router.post('/rotate-csrf', rotateCsrfTokenController)
 
@@ -43,7 +37,6 @@ router.post(
 router.patch(
   '/change-password',
   authenticateMiddleware,
-  csrfMiddleware,
   changePasswordValidation,
   changePasswordController
 )

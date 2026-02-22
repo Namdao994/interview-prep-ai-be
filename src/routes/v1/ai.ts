@@ -2,13 +2,14 @@ import addDiscussionQuestionController from '@controllers/ai/add-discussion-ques
 import generateExplanationController from '@controllers/ai/generate-explanation'
 import generateQuestionController from '@controllers/ai/generate-questions'
 import authenticateMiddleware from '@middlewares/authenticate'
+import authenticateSSE from '@middlewares/authenticateSSE'
 import { Router } from 'express'
 
 const router = Router()
 
 router.get(
   '/generate-questions/:sessionId',
-  authenticateMiddleware,
+  authenticateSSE,
   generateQuestionController
 )
 

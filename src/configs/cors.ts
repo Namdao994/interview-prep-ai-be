@@ -13,8 +13,7 @@ const corsOptions: CorsOptions = {
       //Reject request from non-whitelisted origins
       callback(new Error(`CORS error: ${origin} is not allowed by CORS`), false)
     }
-  },
-  credentials: true
+  }
 }
 
 export default corsOptions
