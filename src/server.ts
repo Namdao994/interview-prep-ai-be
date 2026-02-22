@@ -1,7 +1,7 @@
-import env from '@configs/env'
-if (env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'production') {
   require('module-alias/register')
 }
+import env from '@configs/env'
 import rateLimiter from '@middlewares/rate-limiter'
 import compression from 'compression'
 import express from 'express'
