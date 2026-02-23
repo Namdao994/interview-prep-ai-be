@@ -142,7 +142,6 @@ DISCORD_REDIRECT_URI=https://your-backend-domain.com/api/v1/auth/oauth2/redirect
 
 # AI (Poe API)
 POE_API_KEY=your_poe_api_key
-BASE_URL_POE_AI_API=https://api.poe.com/v1
 DEFAULT_NUMBER_QUESTIONS_GENERATION=5
 
 # Cloudinary
